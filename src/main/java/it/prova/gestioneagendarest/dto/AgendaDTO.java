@@ -32,7 +32,7 @@ public class AgendaDTO {
 	private LocalDateTime dataOraFine;
 
 	@JsonIgnoreProperties(value = { "agende" })
-	@NotNull(message = "{utente.notnull}")
+	
 	private UtenteDTO utente;
 
 	public AgendaDTO() {

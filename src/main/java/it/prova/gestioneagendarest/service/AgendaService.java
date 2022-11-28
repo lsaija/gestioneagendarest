@@ -6,6 +6,8 @@ import it.prova.gestioneagendarest.model.Agenda;
 
 public interface AgendaService {
 	List<Agenda> listAllElements(boolean eager);
+	
+	List<Agenda> listAllElementsSingoloUtente();
 
 	Agenda caricaSingoloElemento(Long id);
 
@@ -20,5 +22,6 @@ public interface AgendaService {
 	List<Agenda> findByExample(Agenda example);
 
 	List<Agenda> findByDescrizione(String descrizione);
+	
 
 }

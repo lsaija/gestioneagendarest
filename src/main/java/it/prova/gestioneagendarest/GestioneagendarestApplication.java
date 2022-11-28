@@ -12,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import it.prova.gestioneagendarest.model.Agenda;
 import it.prova.gestioneagendarest.model.Ruolo;
 import it.prova.gestioneagendarest.model.Utente;
+import it.prova.gestioneagendarest.repository.agenda.AgendaRepository;
 import it.prova.gestioneagendarest.service.AgendaService;
 import it.prova.gestioneagendarest.service.RuoloService;
 import it.prova.gestioneagendarest.service.UtenteService;
@@ -24,7 +25,8 @@ public class GestioneagendarestApplication implements CommandLineRunner{
 	@Autowired
 	private UtenteService utenteServiceInstance;
 	@Autowired
-	private AgendaService agendaServiceInstance;
+	private AgendaRepository agendaRepositoryInstance;
+	
 
 	public static void main(String[] args) {
 		SpringApplication.run(GestioneagendarestApplication.class, args);
@@ -39,7 +41,8 @@ public class GestioneagendarestApplication implements CommandLineRunner{
 		if (ruoloServiceInstance.cercaPerDescrizioneECodice("Classic User", Ruolo.ROLE_CLASSIC_USER) == null) {
 			ruoloServiceInstance.inserisciNuovo(new Ruolo("Classic User", Ruolo.ROLE_CLASSIC_USER));
 		}
-
+		LocalDateTime oraInizio =LocalDateTime.now();
+		LocalDateTime oraFine=LocalDateTime.of(2025,Month.JUNE,29,19,30,40);
 		// a differenza degli altri progetti cerco solo per username perche' se vado
 		// anche per password ogni volta ne inserisce uno nuovo, inoltre l'encode della
 		// password non lo
@@ -51,6 +54,12 @@ public class GestioneagendarestApplication implements CommandLineRunner{
 			utenteServiceInstance.inserisciNuovo(admin);
 			// l'inserimento avviene come created ma io voglio attivarlo
 			utenteServiceInstance.changeUserAbilitation(admin.getId());
+			
+
+			Agenda agenda1=new Agenda("Agenda 1",oraInizio,oraFine);
+			agenda1.setUtente(admin);
+			agendaRepositoryInstance.save(agenda1);
+			
 		}
 
 		if (utenteServiceInstance.findByUsername("user") == null) {
@@ -61,6 +70,11 @@ public class GestioneagendarestApplication implements CommandLineRunner{
 			utenteServiceInstance.inserisciNuovo(classicUser);
 			// l'inserimento avviene come created ma io voglio attivarlo
 			utenteServiceInstance.changeUserAbilitation(classicUser.getId());
+			
+			Agenda agenda2=new Agenda("Agenda 2",oraInizio,oraFine);
+			agenda2.setUtente(classicUser);
+			
+			agendaRepositoryInstance.save(agenda2);
 		}
 
 		if (utenteServiceInstance.findByUsername("user1") == null) {
@@ -83,19 +97,9 @@ public class GestioneagendarestApplication implements CommandLineRunner{
 			utenteServiceInstance.changeUserAbilitation(classicUser2.getId());
 		}
 		
-		LocalDateTime oraInizio =LocalDateTime.now();
-		LocalDateTime oraFine=LocalDateTime.of(2025,Month.JUNE,29,19,30,40);
-		Agenda agenda1=new Agenda("Agenda 1",oraInizio,oraFine);
-		agenda1.setUtente(utenteServiceInstance.findByUsername("admin"));
 		
-		if(agendaServiceInstance.findByDescrizione(agenda1.getDescrizione()).isEmpty())
-			agendaServiceInstance.inserisciNuovo(agenda1);
 		
-		Agenda agenda2=new Agenda("Agenda 2",oraInizio,oraFine);
-		agenda2.setUtente(utenteServiceInstance.findByUsername("user"));
 		
-		if(agendaServiceInstance.findByDescrizione(agenda2.getDescrizione()).isEmpty())
-			agendaServiceInstance.inserisciNuovo(agenda2);
 	}
 
 }
