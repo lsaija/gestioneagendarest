@@ -21,7 +21,7 @@ public class Agenda {
 	@Column(name = "id")
 	private Long id;
 	
-	@Column(name = "descrizioni")
+	@Column(name = "descrizione")
 	private String descrizione;
 	
 	@Column(name = "dataOraInizio")
@@ -64,6 +64,15 @@ public class Agenda {
 		super();
 		this.id = id;
 		this.descrizione = descrizione;
+	}
+	
+	
+
+	public Agenda(String descrizione, LocalDateTime dataOraInizio, LocalDateTime dataOraFine) {
+		super();
+		this.descrizione = descrizione;
+		this.dataOraInizio = dataOraInizio;
+		this.dataOraFine = dataOraFine;
 	}
 
 	public Long getId() {

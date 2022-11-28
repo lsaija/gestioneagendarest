@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import it.prova.gestioneagendarest.model.Agenda;
 
-public interface AgendaRepository extends CrudRepository<Agenda, Long> {
+public interface AgendaRepository extends CrudRepository<Agenda, Long>,CustomAgendaRepository {
 	@Query("from Agenda a join fetch a.utente where a.id = ?1")
 	Agenda findSingleAgendaEager(Long id);
 
