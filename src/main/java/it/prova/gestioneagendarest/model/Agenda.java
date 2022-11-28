@@ -1,5 +1,6 @@
 package it.prova.gestioneagendarest.model;
 
+import java.time.LocalDateTime;
 import java.time.LocalTime;
 
 import javax.persistence.Column;
@@ -24,10 +25,10 @@ public class Agenda {
 	private String descrizione;
 	
 	@Column(name = "dataOraInizio")
-	private LocalTime dataOraInizio;
+	private LocalDateTime dataOraInizio;
 	
 	@Column(name = "dataOraFine")
-	private LocalTime dataOraFine;
+	private LocalDateTime dataOraFine;
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "utente_id", nullable = false)
@@ -37,7 +38,12 @@ public class Agenda {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Agenda(Long id, String descrizione, LocalTime dataOraInizio, LocalTime dataOraFine, Utente utente) {
+	public Agenda(Long id) {
+		super();
+		this.id = id;
+	}
+
+	public Agenda(Long id, String descrizione, LocalDateTime dataOraInizio, LocalDateTime dataOraFine, Utente utente) {
 		super();
 		this.id = id;
 		this.descrizione = descrizione;
@@ -46,7 +52,7 @@ public class Agenda {
 		this.utente = utente;
 	}
 
-	public Agenda(Long id, String descrizione, LocalTime dataOraInizio, LocalTime dataOraFine) {
+	public Agenda(Long id, String descrizione, LocalDateTime dataOraInizio, LocalDateTime dataOraFine) {
 		super();
 		this.id = id;
 		this.descrizione = descrizione;
@@ -76,19 +82,19 @@ public class Agenda {
 		this.descrizione = descrizione;
 	}
 
-	public LocalTime getDataOraInizio() {
+	public LocalDateTime getDataOraInizio() {
 		return dataOraInizio;
 	}
 
-	public void setDataOraInizio(LocalTime dataOraInizio) {
+	public void setDataOraInizio(LocalDateTime dataOraInizio) {
 		this.dataOraInizio = dataOraInizio;
 	}
 
-	public LocalTime getDataOraFine() {
+	public LocalDateTime getDataOraFine() {
 		return dataOraFine;
 	}
 
-	public void setDataOraFine(LocalTime dataOraFine) {
+	public void setDataOraFine(LocalDateTime dataOraFine) {
 		this.dataOraFine = dataOraFine;
 	}
 
